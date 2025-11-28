@@ -20,7 +20,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "📦 Building Docker image..."
-                // Build from current workspace
                 sh """
                     docker build -t springboot-redis-app .
                 """
@@ -31,7 +30,7 @@ pipeline {
             steps {
                 echo "🚀 Deploying using Docker Compose..."
                 sh """
-                    docker-compose down
+                    docker-compose down || true
                     docker-compose up --build -d
                 """
             }
