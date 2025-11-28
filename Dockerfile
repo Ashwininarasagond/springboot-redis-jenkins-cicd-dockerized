@@ -1,16 +1,15 @@
-nano Dockerfile# Use OpenJDK 17 as base image
+# Use OpenJDK 17 as base image
 FROM eclipse-temurin:17-jdk-alpine
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy Maven build files
+# Copy the Spring Boot jar (wildcard handles dynamic jar names)
 COPY target/*.jar app.jar
 
-
-
-# Expose port 8084
+# Expose application port
 EXPOSE 8084
 
-# Run the jar
+# Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
