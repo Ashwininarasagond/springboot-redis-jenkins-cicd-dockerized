@@ -31,14 +31,17 @@ pipeline {
         }
 
         stage('Deploy with Docker Compose') {
-            steps {
-                echo "🚀 Deploying using Docker Compose..."
-                sh """
-                    docker-compose down || true
-                    docker-compose up --build -d
-                """
-            }
-        }
+    steps {
+        echo "🚀 Deploying using Docker Compose..."
+        sh """
+            docker-compose down --remove-orphans || true
+            docker rm -f sak_redis || true
+            docker rm -f sak_app || true
+            docker-compose up --build -d
+        """
+    }
+}
+
 
         stage('Verify Deployment') {
             steps {
